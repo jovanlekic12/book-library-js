@@ -8,7 +8,7 @@
   </head>
   <body>
     <div id="app">
-      <main class="text">
+      <main class="container">
         <h1 class="main__heading">Book library</h1>
         <p class="main__paragraph">
           Use the button below to add to your library and watch your collection
@@ -16,6 +16,51 @@
         </p>
         <button class="btn button__new__book">New Book</button>
       </main>
+      <form class="form">
+        <div class="form__box">
+          <label for="title">Title of the book:</label>
+          <input
+            type="text"
+            id="title"
+            placeholder="Harry Potter"
+            class="input"
+          />
+        </div>
+        <div class="form__box">
+          <label for="author">Author:</label>
+          <input
+            type="text"
+            id="author"
+            placeholder="J.K. Rowling"
+            class="input"
+          />
+        </div>
+        <div class="form__box">
+          <label for="numberPages">Number of pages:</label>
+          <input type="number" id="n-pages" placeholder="500" class="input" />
+        </div>
+        <div class="form__box form__box__checked">
+          <input type="checkbox" id="checkRead" class="checkbox" />
+          <label for="subscribeNews" class="check__label"
+            >Have you read this book?</label
+          >
+          <input type="submit" class="submit" />
+        </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="x__icon"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          />
+        </svg>
+      </form>
     </div>
     <script type="module" src="/main.js"></script>
   </body>
