@@ -19,7 +19,10 @@ body {
   font-size: 3rem;
   color: white;
   height: 100%;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 5rem;
 }
 
 .main__heading {
@@ -38,6 +41,7 @@ body {
   font-weight: 700;
   color: white;
   background-color: rgba(29, 167, 29, 0.993);
+  align-self: center;
 }
 
 .btn:hover {
@@ -118,4 +122,71 @@ label {
 
 .x__icon:hover {
   cursor: pointer;
+}
+
+.list__item {
+  list-style: none;
+  display: block;
+  /* width: fit-content; */
+  background-color: white;
+  padding: 3rem 3rem;
+  border-radius: 2rem;
+  min-width: 35rem;
+  box-shadow: 1px 1px 29px 3px rgba(0, 0, 0, 0.58);
+  -webkit-box-shadow: 1px 1px 29px 3px rgba(0, 0, 0, 0.58);
+  -moz-box-shadow: 1px 1px 29px 3px rgba(0, 0, 0, 0.58);
+  transition: all 0.3s;
+}
+
+.list__item:hover {
+  transform: scale(1.1);
+  transition: all 0.3s;
+}
+
+.book__title {
+  font-size: 3.5rem;
+  text-align: center;
+  margin: 0;
+}
+
+.book__author {
+  font-size: 3rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.book__pages {
+  font-size: 2.5rem;
+  margin: 0;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  margin-top: 1.5rem;
+}
+
+.li_btn {
+  border: 0;
+  padding: 1.5rem 3rem;
+  font-size: 1.5rem;
+  border-radius: 3rem;
+  font-weight: 700;
+  color: white;
+  background-color: rgba(29, 167, 29, 0.993);
+}
+
+.li_btn {
+  cursor: pointer;
+}
+
+.ul__list {
+  display: flex;
+  /* flex-direction: wrap; */
+  flex-wrap: wrap;
+  max-width: 140rem;
+  gap: 4rem;
+  margin: 0 auto;
 }

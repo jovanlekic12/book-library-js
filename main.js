@@ -25,16 +25,22 @@ class BookManager {
     this.books.push(book);
   }
 
+  deleteBook(id) {
+    this.books = this.books.filter((book) => book.id !== id);
+  }
+
   renderBooks() {
     list.innerHTML = "";
     this.books.forEach(function (book) {
-      const html = `<li class="list__item">
+      const html = `<li class="list__item" id="${book.id}">
     <h3 class="book__title">${book.title}</h3>
-    <h3 class="book__author">-${book.author}</h3>
+    <h3 class="book__author">${book.author}</h3>
     <h6 class="book__pages">${book.pages}</h3>
     <div class="buttons">
-    <button class="btn__read">Read ✔️</button>
-    <button class="btn__delete">Delete Book</button>
+    <button class="btn__read li_btn">${
+      book.read ? "Read ✔️" : "Unread ❌"
+    }</button>
+    <button class="btn__delete li_btn">Delete Book</button>
     </div>
       </li>`;
       list.insertAdjacentHTML("afterbegin", html);
@@ -57,10 +63,16 @@ class Book {
     this.pages = pages;
     this.id = self.crypto.randomUUID();
   }
+  changeIsRead() {
+    this.read = !this.read;
+  }
 }
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
+  authorInput.value = "";
+  titleInput.value = "";
+  pagesInput.value = "";
 });
 
 btnNewBook.addEventListener("click", function () {
@@ -87,9 +99,28 @@ checkBox.addEventListener("change", function () {
   check = checkBox.checked;
 });
 
+list.addEventListener("click", function (event) {
+  if (event.target.classList.contains("btn__delete")) {
+    const li = event.target.closest("li");
+    const id = li.id;
+    bookManager.deleteBook(id);
+    li.remove();
+  }
+  if (event.target.classList.contains("btn__read")) {
+    const li = event.target.closest("li");
+    const id = li.id;
+    const currentBook = bookManager.books.find((book) => id === book.id);
+    currentBook.changeIsRead();
+    if (currentBook.read === true) {
+      event.target.textContent = "Unread ❌";
+    } else {
+      event.target.textContent = "Read ✔️";
+    }
+  }
+});
+
 btnSubmit.addEventListener("click", function () {
   bookManager.addBook(new Book(title, author, number, check));
   bookManager.renderBooks();
   formContainer.style.display = "none";
-  console.log(bookManager);
 });
