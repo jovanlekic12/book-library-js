@@ -33,6 +33,7 @@
           <div class="form__box">
             <label for="author">Author:</label>
             <input
+              required
               type="text"
               id="author"
               placeholder="J.K. Rowling"
@@ -41,14 +42,20 @@
           </div>
           <div class="form__box">
             <label for="numberPages">Number of pages:</label>
-            <input type="number" id="n-pages" placeholder="500" class="input" />
+            <input
+              required
+              type="number"
+              id="n-pages"
+              placeholder="500"
+              class="input"
+            />
           </div>
           <div class="form__box form__box__checked">
-            <input type="checkbox" id="checkRead" class="checkbox" />
+            <input required type="checkbox" id="checkRead" class="checkbox" />
             <label for="subscribeNews" class="check__label"
               >Have you read this book?</label
             >
-            <input type="submit" class="submit" />
+            <button type="submit" class="submit">Submit</button>
           </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -35,7 +35,7 @@ class BookManager {
       const html = `<li class="list__item" id="${book.id}">
     <h3 class="book__title">${book.title}</h3>
     <h3 class="book__author">${book.author}</h3>
-    <h6 class="book__pages">${book.pages}</h3>
+    <h6 class="book__pages">${book.pages} pages</h3>
     <div class="buttons">
     <button class="btn__read li_btn">${
       book.read ? "Read ✔️" : "Unread ❌"
@@ -56,12 +56,14 @@ class Book {
   pages;
   id;
   read;
+  isEditing;
   constructor(title, author, pages, read) {
+    this.id = self.crypto.randomUUID();
+    this.isEditing = false;
     this.read = read;
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.id = self.crypto.randomUUID();
   }
   changeIsRead() {
     this.read = !this.read;
@@ -70,6 +72,9 @@ class Book {
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();
+  bookManager.addBook(new Book(title, author, number, check));
+  bookManager.renderBooks();
+  formContainer.style.display = "none";
   authorInput.value = "";
   titleInput.value = "";
   pagesInput.value = "";
@@ -111,16 +116,15 @@ list.addEventListener("click", function (event) {
     const id = li.id;
     const currentBook = bookManager.books.find((book) => id === book.id);
     currentBook.changeIsRead();
-    if (currentBook.read === true) {
-      event.target.textContent = "Unread ❌";
-    } else {
-      event.target.textContent = "Read ✔️";
-    }
+    currentBook.read
+      ? (event.target.textContent = "Read ✔️")
+      : (event.target.textContent = "Unread ❌");
+    // if (currentBook.read === true) {
+    //   event.target.textContent = "Unread ❌";
+    //   console.log("unread");
+    // } else {
+    //   event.target.textContent = "Read ✔️";
+    //   console.log("read");
+    // }
   }
-});
-
-btnSubmit.addEventListener("click", function () {
-  bookManager.addBook(new Book(title, author, number, check));
-  bookManager.renderBooks();
-  formContainer.style.display = "none";
 });
