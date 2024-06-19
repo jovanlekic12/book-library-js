@@ -16,6 +16,8 @@ let title;
 let author;
 let number;
 let check;
+let editTitle;
+let editAuthor;
 class BookManager {
   books;
   constructor() {
@@ -32,18 +34,43 @@ class BookManager {
   renderBooks() {
     list.innerHTML = "";
     this.books.forEach(function (book) {
-      const html = `<li class="list__item" id="${book.id}">
-    <h3 class="book__title">${book.title}</h3>
-    <h3 class="book__author">${book.author}</h3>
-    <h6 class="book__pages">${book.pages} pages</h3>
-    <div class="buttons">
-    <button class="btn__read li_btn">${
-      book.read ? "Read ✔️" : "Unread ❌"
-    }</button>
-    <button class="btn__delete li_btn">Delete Book</button>
-    </div>
-      </li>`;
-      list.insertAdjacentHTML("afterbegin", html);
+      if (book.isEditing) {
+        const html = `<li class="list__item" id="${book.id}">
+        <div class="editing_inputs">
+        <input type="text" value="${
+          book.title
+        }" class="edit_input edit_title" />
+        <input type="text" value="${
+          book.author
+        }" class="edit_input edit_author" />
+        <input type="number" value="${
+          book.pages
+        }" class="edit_input edit_pages" />
+        </div>
+         <div class="buttons">
+        <button class="btn__read li_btn">${
+          book.read ? "Read ✔️" : "Unread ❌"
+        }</button>
+          <button class="btn__delete li_btn">Delete Book</button>
+          <button type="submit" class="btn__edit li_btn burek">Edit</button>
+          </div>
+        </li>`;
+        list.insertAdjacentHTML("afterbegin", html);
+      } else {
+        const html = `<li class="list__item" id="${book.id}">
+        <h3 class="book__title">${book.title}</h3>
+        <h3 class="book__author">${book.author}</h3>
+        <h6 class="book__pages">${book.pages} pages</h3>
+        <div class="buttons">
+        <button class="btn__read li_btn">${
+          book.read ? "Read ✔️" : "Unread ❌"
+        }</button>
+          <button class="btn__delete li_btn">Delete Book</button>
+          <button class="btn__edit li_btn">Edit</button>
+          </div>
+          </li>`;
+        list.insertAdjacentHTML("afterbegin", html);
+      }
     });
   }
 }
@@ -67,6 +94,9 @@ class Book {
   }
   changeIsRead() {
     this.read = !this.read;
+  }
+  changeIsEdit() {
+    this.isEditing = !this.isEditing;
   }
 }
 
@@ -119,12 +149,30 @@ list.addEventListener("click", function (event) {
     currentBook.read
       ? (event.target.textContent = "Read ✔️")
       : (event.target.textContent = "Unread ❌");
-    // if (currentBook.read === true) {
-    //   event.target.textContent = "Unread ❌";
-    //   console.log("unread");
-    // } else {
-    //   event.target.textContent = "Read ✔️";
-    //   console.log("read");
-    // }
+  }
+  if (event.target.classList.contains("btn__edit")) {
+    const li = event.target.closest("li");
+    const id = li.id;
+    const currentBook = bookManager.books.find((book) => id === book.id);
+    const restOfBooks = bookManager.books.filter((book) => book.id !== id);
+    restOfBooks.forEach((book) => (book.isEditing = false));
+    currentBook.changeIsEdit();
+    bookManager.renderBooks();
+    if (currentBook.isEditing) {
+      const editTitleInput = document.querySelector(".edit_title");
+      editTitleInput.addEventListener("input", function () {
+        editTitle = editTitleInput.value;
+        currentBook.title = editTitle;
+      });
+      const editAuthorInput = document.querySelector(".edit_author");
+      editAuthorInput.addEventListener("input", function () {
+        editAuthor = editAuthorInput.value;
+        currentBook.author = editAuthor;
+      });
+      const editPagesInput = document.querySelector(".edit_pages");
+      editPagesInput.addEventListener("input", function () {
+        currentBook.pages = editPagesInput.value;
+      });
+    }
   }
 });

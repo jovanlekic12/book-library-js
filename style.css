@@ -52,6 +52,7 @@ body {
   padding: 7rem 3rem;
   background-color: #d0f5cf;
   position: fixed;
+  max-width: 50rem;
   border-radius: 2rem;
   top: 50%;
   left: 50%;
@@ -186,7 +187,21 @@ label {
   display: flex;
   /* flex-direction: wrap; */
   flex-wrap: wrap;
-  max-width: 140rem;
+  max-width: 150rem;
   gap: 4rem;
   margin: 0 auto;
+}
+
+.edit_input {
+  font-size: 2.4rem;
+  border-radius: 2rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.editing_inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0 5rem;
 }
